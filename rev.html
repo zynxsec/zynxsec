@@ -57,8 +57,9 @@
       outputEl.textContent = 'Loading...';
 
       try {
-        const res = await fetch(`https://caterscam-free100k.deno.dev/?ip=${encodeURIComponent(ip)}`);
-        const data = await res.json();
+        const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://caterscam-free100k.deno.dev/?ip=' + ip)}`);
+        const wrapper = await res.json();
+        const data = JSON.parse(wrapper.contents);
 
         if (Array.isArray(data.domains)) {
           outputEl.textContent = data.domains.map(d => d.domain).join('\n');
@@ -82,4 +83,5 @@
 
 </body>
 </html>
+
 
