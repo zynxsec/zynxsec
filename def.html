@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ZynxSec1337</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      href="https://b.top4top.io/p_3603uu6no1.png"
+      type="image/png"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: #000;
+        color: #0f0;
+        font-family: "Courier New", monospace;
+        overflow-x: hidden;
+        background-image: radial-gradient(
+            circle at 10% 20%,
+            rgba(0, 80, 0, 0.1) 0%,
+            transparent 20%
+          ),
+          radial-gradient(
+            circle at 90% 60%,
+            rgba(0, 80, 0, 0.1) 0%,
+            transparent 20%
+          );
+        line-height: 1.4;
+        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><text x="0" y="18" font-family="Arial" font-size="18" fill="%2300ff00">❯</text></svg>'),
+          auto;
+      }
+
+      .matrix-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.3;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        position: relative;
+        z-index: 1;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .header {
+        text-align: center;
+        padding: 20px 0;
+        margin-bottom: 30px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .logo {
+        max-width: 300px;
+        height: auto;
+        margin: 0 auto 20px;
+        display: block;
+        padding: 0;
+        background: transparent;
+      }
+
+      h1 {
+        font-size: 3.5rem;
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        text-shadow: 0 0 15px #0f0, 0 0 25px #0f0;
+        margin-bottom: 10px;
+        color: #0f0;
+        animation: text-flicker 3s linear infinite;
+      }
+
+      .tagline {
+        font-size: 1.5rem;
+        color: #f00;
+        margin-bottom: 15px;
+        text-shadow: 0 0 10px #f00;
+        animation: flicker 2s infinite;
+      }
+
+      .message-container {
+        background: rgba(0, 0, 0, 0.8);
+        border: none;
+        padding: 40px;
+        margin: 30px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 0 50px rgba(255, 0, 0, 0.7);
+        border-radius: 10px;
+        flex-grow: 1;
+      }
+
+      .message-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          #0f0,
+          #f00,
+          #0f0,
+          transparent
+        );
+        animation: scanline 2s linear infinite;
+      }
+
+      .message-container::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          #f00,
+          #0f0,
+          #f00,
+          transparent
+        );
+        animation: scanline 3s linear infinite reverse;
+      }
+
+      .psycho-message {
+        font-size: 3rem;
+        color: #0f0;
+        text-shadow: 0 0 15px #0f0, 0 0 30px #0f0;
+        margin-bottom: 20px;
+        animation: glitch 5s infinite;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      .agency-name {
+        font-size: 2.5rem;
+        color: #f00;
+        text-shadow: 0 0 15px #f00, 0 0 25px #f00;
+        font-weight: bold;
+        animation: flicker 1.5s infinite;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+      }
+
+      .hacker-terminal {
+        background: rgba(0, 0, 0, 0.9);
+        border: 1px solid #0f0;
+        padding: 25px;
+        margin: 30px 0;
+        font-family: "Courier New", monospace;
+        font-size: 1.1rem;
+        box-shadow: 0 0 30px rgba(0, 255, 0, 0.4);
+        position: relative;
+        overflow: hidden;
+        border-radius: 5px;
+      }
+
+      .terminal-line {
+        margin-bottom: 12px;
+        animation: typewriter 4s steps(40) 1s both;
+      }
+
+      .terminal-prompt {
+        color: #0f0;
+        font-weight: bold;
+      }
+
+      .terminal-command {
+        color: #fff;
+      }
+
+      .terminal-output {
+        color: #0ff;
+        margin-left: 20px;
+        text-shadow: 0 0 5px #0ff;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 30px 20px;
+        margin-top: auto;
+        font-size: 0.9rem;
+        color: #0a0;
+        border-top: 1px dashed #0f0;
+        background: rgba(0, 20, 0, 0.3);
+      }
+
+      .telegram-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .telegram-btn {
+        background: rgba(0, 30, 0, 0.7);
+        border: 2px solid #0f0;
+        color: #0f0;
+        padding: 12px 20px;
+        font-size: 1rem;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: all 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+        font-family: "Courier New", monospace;
+        font-weight: bold;
+      }
+
+      .telegram-btn:hover {
+        background: rgba(0, 50, 0, 0.9);
+        box-shadow: 0 0 25px rgba(0, 255, 0, 0.8);
+        transform: translateY(-3px);
+        color: #fff;
+      }
+
+      .telegram-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(0, 255, 0, 0.4),
+          transparent
+        );
+        transition: 0.5s;
+      }
+
+      .telegram-btn:hover::before {
+        left: 100%;
+      }
+
+      .audio-controls {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 100;
+      }
+
+      .audio-btn {
+        background: rgba(0, 30, 0, 0.7);
+        border: 2px solid #0f0;
+        color: #0f0;
+        padding: 10px 15px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-family: "Courier New", monospace;
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        font-weight: bold;
+      }
+
+      .audio-btn:hover {
+        background: rgba(0, 50, 0, 0.9);
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+      }
+
+      @keyframes text-flicker {
+        0%,
+        19.999%,
+        22%,
+        62.999%,
+        64%,
+        64.999%,
+        72%,
+        100% {
+          opacity: 1;
+          text-shadow: 0 0 15px #0f0, 0 0 25px #0f0;
+        }
+        20%,
+        21.999%,
+        63%,
+        63.999%,
+        65%,
+        71.999% {
+          opacity: 0.4;
+          text-shadow: 0 0 5px #0f0;
+        }
+      }
+
+      @keyframes flicker {
+        0%,
+        100% {
+          opacity: 1;
+          text-shadow: 0 0 10px #f00;
+        }
+        50% {
+          opacity: 0.7;
+          text-shadow: 0 0 15px #f00, 0 0 25px #f00;
+        }
+      }
+
+      @keyframes glitch {
+        0% {
+          transform: translate(0);
+          text-shadow: 0 0 15px #0f0;
+        }
+        20% {
+          transform: translate(-3px, 3px);
+          text-shadow: 0 0 15px #0f0, 3px 3px 0 #f00;
+        }
+        40% {
+          transform: translate(-3px, -3px);
+          text-shadow: 0 0 15px #0f0, -3px -3px 0 #00f;
+        }
+        60% {
+          transform: translate(3px, 3px);
+          text-shadow: 0 0 15px #0f0, 3px -3px 0 #f00;
+        }
+        80% {
+          transform: translate(3px, -3px);
+          text-shadow: 0 0 15px #0f0, -3px 3px 0 #00f;
+        }
+        100% {
+          transform: translate(0);
+          text-shadow: 0 0 15px #0f0;
+        }
+      }
+
+      @keyframes scanline {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
+      .terminal-line {
+        overflow: hidden;
+        white-space: nowrap;
+        margin: 0 auto;
+        border-right: 2px solid #0f0;
+        animation: typewriter 4s steps(40, end),
+          blink-caret 0.75s step-end infinite;
+      }
+
+      @keyframes blink-caret {
+        from,
+        to {
+          border-color: transparent;
+        }
+        50% {
+          border-color: #0f0;
+        }
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.5rem;
+        }
+
+        .logo {
+          max-width: 250px;
+        }
+
+        .psycho-message {
+          font-size: 2.2rem;
+        }
+
+        .agency-name {
+          font-size: 1.8rem;
+        }
+
+        .telegram-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .telegram-btn {
+          width: 80%;
+          text-align: center;
+        }
+      }
+
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 1.8rem;
+        }
+
+        .container {
+          padding: 10px;
+        }
+
+        .psycho-message {
+          font-size: 1.8rem;
+        }
+
+        .agency-name {
+          font-size: 1.4rem;
+        }
+
+        .telegram-btn {
+          padding: 10px 15px;
+          font-size: 0.9rem;
+          width: 90%;
+        }
+
+        .message-container {
+          padding: 25px 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas class="matrix-bg" id="matrix"></canvas>
+
+    <div class="container">
+      <div class="header">
+        <!-- Logo tanpa border dan tanpa highlight merah -->
+        <img
+          src="https://b.top4top.io/p_3603uu6no1.png"
+          alt="SecretSec Logo"
+          class="logo"
+        />
+        <h1>SECRETSEC AGENCY</h1>
+        <p class="tagline">PSYCHO HACKER COLLECTIVE</p>
+      </div>
+      <div class="message-container">
+        <div class="psycho-message">Hi admin</div>
+        <div class="agency-name">SecretSec Agency was here</div>
+      </div>
+      <div class="footer">
+        <p>
+          This system has been owned by SecretSec Agency. Improve your security.
+        </p>
+        <p>We are everywhere. We are nowhere.</p>
+
+        <div class="telegram-buttons">
+          <a
+            href="https://t.me/CarlosCyberTechno"
+            class="telegram-btn"
+            target="_blank"
+            >CHANNEL 1</a
+          >
+          <a
+            href="https://t.me/SecretSecAgency"
+            class="telegram-btn"
+            target="_blank"
+            >CHANNEL 2</a
+          >
+          <a
+            href="https://t.me/+W76EXK-skko4OWRl"
+            class="telegram-btn"
+            target="_blank"
+            >GROUP CHAT</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="audio-controls">
+      <button class="audio-btn" onclick="toggleAudio()">TOGGLE MUSIC</button>
+      <audio id="hackerAudio" loop>
+        <!-- Ganti dengan URL audio Anda -->
+        <source src="https://d.top4top.io/m_3603f4ol91.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+
+    <script>
+      // Matrix background effect
+      const canvas = document.getElementById("matrix");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&!SECRETHACK";
+      const charArray = chars.split("");
+      const fontSize = 14;
+      const columns = canvas.width / fontSize;
+      const drops = [];
+
+      for (let x = 0; x < columns; x++) {
+        drops[x] = Math.floor((Math.random() * canvas.height) / fontSize);
+      }
+
+      function drawMatrix() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.font = fontSize + "px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+          const text = charArray[Math.floor(Math.random() * charArray.length)];
+
+          // Random color between green and red
+          if (Math.random() > 0.85) {
+            ctx.fillStyle = "#f00";
+            ctx.shadowColor = "#f00";
+            ctx.shadowBlur = 10;
+          } else {
+            ctx.fillStyle = "#0f0";
+            ctx.shadowColor = "#0f0";
+            ctx.shadowBlur = 5;
+          }
+
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+
+          drops[i]++;
+        }
+      }
+
+      setInterval(drawMatrix, 35);
+
+      // Audio control
+      const audio = document.getElementById("hackerAudio");
+
+      function toggleAudio() {
+        if (audio.paused) {
+          audio.play().catch((e) => console.log("Audio play failed:", e));
+        } else {
+          audio.pause();
+        }
+      }
+
+      // Auto-start audio (optional - remove if you don't want autoplay)
+      window.addEventListener(
+        "click",
+        function () {
+          if (audio.paused) {
+            audio.play().catch((e) => console.log("Audio play failed:", e));
+          }
+        },
+        { once: true }
+      );
+
+      // Terminal typing effect
+      document.addEventListener("DOMContentLoaded", function () {
+        const lines = document.querySelectorAll(".terminal-line");
+        lines.forEach((line, index) => {
+          line.style.animationDelay = `${index * 2}s`;
+        });
+      });
+
+      // Handle window resize
+      window.addEventListener("resize", function () {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      });
+
+      // Random flickering effect
+      setInterval(() => {
+        const elements = document.querySelectorAll(
+          ".psycho-message, .agency-name, h1"
+        );
+        elements.forEach((el) => {
+          if (Math.random() > 0.7) {
+            el.style.opacity = Math.random() > 0.5 ? 1 : 0.6;
+            el.style.textShadow =
+              Math.random() > 0.5
+                ? "0 0 15px #0f0, 0 0 30px #0f0"
+                : "0 0 20px #f00, 0 0 40px #f00";
+          }
+        });
+      }, 200);
+    </script>
+  </body>
+</html>
